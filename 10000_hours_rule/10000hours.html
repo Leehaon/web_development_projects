@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="css/10000hours.css">
 </head>
 <body>
-  <section id="all">
+  <section id="contents">
     <header>
       <h1>
         <img class="img_clock" src="img/clock.png" alt="배경 시계 이미지">
@@ -44,6 +44,44 @@
       <button class="start_btn">나는 며칠 동안 훈련을 해야 1만 시간이 될까?</button>
       <img src="img/click.png" alt="클릭 이미지">
     </div>
+    <div class="loading">
+      <div class="img_wrap">
+        <img src="img/loading.png" alt="로딩 중">
+      </div>
+    </div>
+    <div class="result">
+      <div class="result_wrap">
+        <div>
+          당신은 <span class="field_result"></span>전문가가 되기 위해서
+        </div>
+        <div>
+          대략 <span class="time_result"></span>일 이상 훈련하셔야 합니다 !:)
+        </div>
+        <div class="buttons">
+          <div class="go">
+            <button class="modal_btn">훈련하러 가기 GO!GO!</button>
+          </div>
+          <div class="share">
+            <button class="share_btn">공유하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section id="modal">
+      <div class="modal_wrap">
+        <div class="cheer">
+          <h1>화이팅!♥♥♥</h1>
+          <h3>당신의 꿈을 응원합니다!</h3>
+        </div>
+        <div class="licat_img">
+          <img src="img/licat.png" alt="라이캣 응원">
+        </div>
+        <div class="btn">
+          <button class="close_btn">종료하고 진짜 훈련하러 가기 GO!GO!</button>
+          <p>(그냥 닫기 버튼입니다.)</p>
+        </div>
+      </div>
+    </section>
     <section id="copyright">
       <div class="img_logo">
         <img src="img/logo.png" alt="weniv">
@@ -53,7 +91,6 @@
         수정 및 재배포, 무단 도용 시 법적인 문제가 발생할 수 있습니다.
       </p>
   </section>
-  </section>
-  
+  <script type="text/javascript" src="js/10000hours.js"></script>
 </body>
 </html>
