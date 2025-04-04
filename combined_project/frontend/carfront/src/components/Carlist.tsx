@@ -1,18 +1,47 @@
-import { useQuery } from "@tanstack/react-query";
-import { CarResponse } from "../types";
-import axios from "axios";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getCars, deleteCar } from "../api/carapi";
+import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 
 function Carlist() {
-  const getCars = async (): Promise<CarResponse[]> => {
-    const response = await axios.get('http://localhost:8080/api/cars');
-
-    return response.data._embedded.cars; // embedded
-  }
-
+  const queryClient = useQueryClient();
   const {data, error, isSuccess} = useQuery({
     queryKey: ["cars"],
     queryFn: getCars
   });
+
+  const {mutate} = useMutation(deleteCar, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['cars']});
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const colums: GridColDef[] = [
+    {field: 'brand', headerName: 'Brand', width: 200},
+    {field: 'model', headerName: 'Model', width: 200},
+    {field: 'color', headerName: 'Color', width: 200},
+    {field: 'registrationNumber', headerName: 'Reg.nr.', width: 150},
+    {field: 'modelYear', headerName: 'Model Year', width: 150},
+    {field: 'price', headerName: 'Price', width: 150},
+    {
+      field: 'edit',
+      headerName: '',
+      width: 90,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderCell: (params: GridCellParams) => 
+        <button
+          onClick={() => mutate(params.row._links.car.href)}
+        >
+          삭제
+        </button>
+    }
+  ]
+
+
 
   if(!isSuccess) {
     return <span>Loading 중...⏰</span>
@@ -22,23 +51,14 @@ function Carlist() {
   }
   else {
     return (
-      <table>
-        <tbody>
-          {
-            data.map((car: CarResponse) => 
-              <tr key={car._links.self.href}>
-                <td>{car.brand}</td>
-                <td>{car.model}</td>
-                <td>{car.color}</td>
-                <td>{car.registrationNumber}</td>
-                <td>{car.modelYear}</td>
-                <td>{car.price}</td>
-              </tr>)
-          }
-        </tbody>
-      </table>
+      <DataGrid
+        rows={data}
+        columns={colums}
+        getRowId={row => row._links.self.href}
+        // disableRowSelectionOnClick={true}
+      />
     );
   }
 }
 
-export default Carlist;
+export default Carlist; 
