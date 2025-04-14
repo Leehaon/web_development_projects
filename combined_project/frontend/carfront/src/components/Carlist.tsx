@@ -4,6 +4,7 @@ import { getCars, deleteCar } from "../api/carapi";
 import { DataGrid, GridCellParams, GridColDef } from "@mui/x-data-grid";
 import { Snackbar } from "@mui/material";
 import AddCar from "./AddCar";
+import EditCar from "./EditCar";
 
 function Carlist() {
   const [open, setOpen] = useState(false);
@@ -35,6 +36,15 @@ function Carlist() {
       headerName: '',
       width: 90,
       sortable: false,
+      disableColumnMenu: true,
+      renderCell: (params: GridCellParams) => 
+        <EditCar cardata={params.row} />
+    },
+    {
+      field: 'delete',
+      headerName: '',
+      width: 90,
+      sortable: false,
       filterable: false,
       disableColumnMenu: true,
       renderCell: (params: GridCellParams) => 
@@ -45,7 +55,7 @@ function Carlist() {
             }
           }}
         >
-          삭제
+          삭제❌
         </button>
     }
   ]
